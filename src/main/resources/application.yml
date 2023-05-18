@@ -1,9 +1,9 @@
 spring:
-  h2:
-    console:
-      enabled: true
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:mydb
-    username: sa
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_batch
+    username: root
     password: password
+  batch:
+    jdbc:
+      initialize-schema: always

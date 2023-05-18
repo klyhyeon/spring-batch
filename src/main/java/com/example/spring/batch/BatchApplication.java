@@ -2,6 +2,7 @@ package com.example.spring.batch;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -16,7 +17,7 @@ public class BatchApplication {
 
     //jobRepository, platfromTrasactionManager는 SpringBatchConfiguration에서 자동으로 주입
     @Bean
-    public Step step(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
+    public Step step1(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
         return new StepBuilder("step1", jobRepository).tasklet((contribution, chunkContext) -> {
             System.out.println("Hello, World!");
             return RepeatStatus.FINISHED;
@@ -25,8 +26,8 @@ public class BatchApplication {
 
     @Bean
     public Job job(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
-        return new JobBuilder("job", jobRepository)
-                .start(step(jobRepository, platformTransactionManager))
+        return new JobBuilder("basicJob", jobRepository)
+                .start(step1(jobRepository, platformTransactionManager))
                 .build();
     }
 
